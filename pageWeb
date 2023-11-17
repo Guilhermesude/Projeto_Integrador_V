@@ -1,0 +1,70 @@
+      xmldoc = xmlResponse.getElementsByTagName("B1");
+      message = xmldoc[0].firstChild.nodeValue;
+      if (message > 2048){
+      color = "#aa0000";
+      }
+      else {
+        color = "#0000aa";
+      }
+      document.getElementById("b1").innerHTML=message;
+      width = message / 40.95;
+      document.getElementById("b1").style.width=(width+"%");
+      document.getElementById("b1").style.backgroundColor=color;
+      //document.getElementById("b1").style.borderRadius="5px";
+      
+      xmldoc = xmlResponse.getElementsByTagName("V1");
+      message = xmldoc[0].firstChild.nodeValue;
+      document.getElementById("v1").innerHTML=message;
+      document.getElementById("v1").style.width=(width+"%");
+      document.getElementById("v1").style.backgroundColor=color;
+      //document.getElementById("v1").style.borderRadius="5px";
+  
+      xmldoc = xmlResponse.getElementsByTagName("LED");
+      message = xmldoc[0].firstChild.nodeValue;
+  
+      if (message == 0){
+        document.getElementById("btn0").innerHTML="DESLIGAR";
+      }
+      else{
+        document.getElementById("btn0").innerHTML="LIGAR";
+      }
+         
+      xmldoc = xmlResponse.getElementsByTagName("SWITCH");
+      message = xmldoc[0].firstChild.nodeValue;
+      document.getElementById("switch").style.backgroundColor="rgb(200,200,200)";
+      // update the text in the table
+      if (message == 0){
+        document.getElementById("switch").innerHTML="Switch is OFF";
+        document.getElementById("btn1").innerHTML="DESLIGAR";
+        document.getElementById("switch").style.color="#0000AA"; 
+      }
+      else {
+        document.getElementById("switch").innerHTML="Switch is ON";
+        document.getElementById("btn1").innerHTML="LIGAR";
+        document.getElementById("switch").style.color="#00AA00";
+      }
+     }
+  
+    // general processing code for the web page to ask for an XML steam
+    // this is actually why you need to keep sending data to the page to 
+    // force this call with stuff like this
+    // server.on("/xml", SendXML);
+    // otherwise the page will not request XML from the ESP, and updates will not happen
+    function process(){
+     
+     if(xmlHttp.readyState==0 || xmlHttp.readyState==4) {
+        xmlHttp.open("PUT","xml",true);
+        xmlHttp.onreadystatechange=response;
+        xmlHttp.send(null);
+      }       
+        // you may have to play with this value, big pages need more porcessing time, and hence
+        // a longer timeout
+        setTimeout("process()",100);
+    }
+  
+  
+  </script>
+
+</html>
+
+
